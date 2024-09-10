@@ -1,0 +1,57 @@
+name: Go Test and Coverage Collection
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest , macOS-latest]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: ./go.mod
+
+      - name: Cache Go build and tools
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/go-build
+            ~/go/pkg/mod
+            ~/go/bin
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+
+      - name: Run tests
+        run: |
+          mkdir -p coverage_reports
+          go run gotest.tools/gotestsum@latest --junitfile ${{ matrix.os }}_report.xml -- -coverprofile=${{ matrix.os }}_coverage.out -covermode=count -coverpkg=./... ./...
+
+      - name: Upload coverage reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: reports-${{ matrix.os }}
+          path: |
+            ${{ matrix.os }}_coverage.out
+            ${{ matrix.os }}_report.xml
+            
+            
+
+
+
+  merge-and-generate-svg:
+    needs: [test]
+    uses: ./.github/workflows/merge-and-generate-svg.yml
