@@ -71,8 +71,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: coverage-report
-          path: |
-            /tmp/coveragereport
+          path: /tmp/coveragereport
 
   deploy:
     needs: merge-and-generate-svg
@@ -93,34 +92,30 @@ jobs:
           name: coverage-report
           path: coverage-report
 
-      # Load the Allure history from gh-pages
-      - name: Load Allure history
+      - name: Get Allure history
         uses: actions/checkout@v4
         if: always()
         continue-on-error: true
         with:
           ref: gh-pages
-          path: gh-pages/allure-report
-          persist-credentials: true
+          path: gh-pages/allure-report/history
 
-      # Ensure the history directory exists
-      - name: Create history directory if not exists
+      - name: Prepare Allure report with history
         run: |
-          mkdir -p gh-pages/allure-report/history
+          mkdir -p allure-results/allure-history
+          if [ -d gh-pages/allure-report/history ]; then
+            cp -r gh-pages/allure-report/history allure-results/allure-history
+          fi
 
-      # Fix permissions before copying files
-      - name: Fix Permissions
-        run: |
-          sudo chmod -R 777 gh-pages/allure-report/history
-
-      - name: Build test report
+      - name: Build Allure report
         uses: simple-elf/allure-report-action@v1.7
         if: always()
         with:
           gh_pages: gh-pages
-          allure_history: gh-pages/allure-report/history
+          allure_history: allure-history
           allure_results: allure-results
-          allure_report: allure-report
+          allure_report: 'allure-report'
+          keep_reports: 5
 
       - name: Copy Allure report to gh-pages
         run: |
