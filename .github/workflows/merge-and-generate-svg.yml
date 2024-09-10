@@ -34,7 +34,6 @@ jobs:
           mkdir -p organized/report_xml
           find reports -name "*coverage.out" -exec mv {} organized/coverage_out/ \;
           find reports -name "*report.xml" -exec mv {} organized/report_xml/ \;
-
       - name: upload artifacts reports xml
         uses: actions/upload-artifact@v4
         with:
@@ -49,17 +48,14 @@ jobs:
           else
             echo "No coverage files found" && exit 1
           fi
-
       - name: Generate SVG from merged coverage file
         run: |
           go run github.com/nikolaydubina/go-cover-treemap@latest -coverprofile=merged-coverage.out > coverage.svg
-
       - name: Create coverage report
         run: |
           go get github.com/boumenot/gocover-cobertura
           go install github.com/boumenot/gocover-cobertura
           go run github.com/boumenot/gocover-cobertura -by-files -ignore-gen-files < merged-coverage.out > coverage.xml
-
       - name: ReportGenerator
         uses: danielpalme/ReportGenerator-GitHub-Action@5.2.2
         with:
@@ -67,17 +63,21 @@ jobs:
           targetdir: /tmp/coveragereport
           toolpath: /tmp/reportgeneratortool
 
+
+
       - name: Upload coverage report
         uses: actions/upload-artifact@v4
         with:
           name: coverage-report
-          path: /tmp/coveragereport
-
+          path: |
+            /tmp/coveragereport
   deploy:
     needs: merge-and-generate-svg
     runs-on: ubuntu-latest
     name: Deploy
     steps:
+      - uses: actions/checkout@v4
+
       - name: Download Allure Results
         uses: actions/download-artifact@v4
         with:
@@ -90,7 +90,7 @@ jobs:
           name: coverage-report
           path: coverage-report
 
-      - name: Get Allure history
+      - name: Load test report history
         uses: actions/checkout@v4
         if: always()
         continue-on-error: true
@@ -98,34 +98,23 @@ jobs:
           ref: gh-pages
           path: gh-pages
 
-      - name: Prepare Allure report with history
+      - name: Copy coverage report to gh-pages
         run: |
-          mkdir -p allure-results/allure-history
-          if [ -d gh-pages/allure-report/history ]; then
-            cp -r gh-pages/allure-report/history/* allure-results/allure-history/
-          fi
+          mkdir -p gh-pages/coverage-report
+          cp -r coverage-report/* gh-pages/coverage-report/
+          
 
-      - name: Build Allure report
+      - name: Build test report
         uses: simple-elf/allure-report-action@v1.7
         if: always()
         with:
           gh_pages: gh-pages
-          allure_history: allure-results/allure-history
-          allure_results: allure-results
-          allure_report: 'allure-report'
-          keep_reports: 5
-
+          subfolder: 'allure-report'
 
       - name: Copy Allure report to gh-pages
         run: |
           mkdir -p gh-pages/allure-report
           cp -r allure-report/* gh-pages/allure-report/
-
-      - name: Copy coverage report to gh-pages
-        run: |
-          mkdir -p gh-pages/coverage-report
-          cp -r coverage-report/* gh-pages/coverage-report/
-
       - name: Publish test and coverage reports
         uses: peaceiris/actions-gh-pages@v3
         if: always()
