@@ -78,8 +78,6 @@ jobs:
     runs-on: ubuntu-latest
     name: Deploy
     steps:
-      - uses: actions/checkout@v4
-
       - name: Download Allure Results
         uses: actions/download-artifact@v4
         with:
@@ -98,13 +96,13 @@ jobs:
         continue-on-error: true
         with:
           ref: gh-pages
-          path: gh-pages/allure-report/history
+          path: gh-pages
 
       - name: Prepare Allure report with history
         run: |
           mkdir -p allure-results/allure-history
           if [ -d gh-pages/allure-report/history ]; then
-            cp -r gh-pages/allure-report/history allure-results/allure-history
+            cp -r gh-pages/allure-report/history/* allure-results/allure-history/
           fi
 
       - name: Build Allure report
@@ -112,10 +110,11 @@ jobs:
         if: always()
         with:
           gh_pages: gh-pages
-          allure_history: allure-history
+          allure_history: allure-results/allure-history
           allure_results: allure-results
           allure_report: 'allure-report'
           keep_reports: 5
+
 
       - name: Copy Allure report to gh-pages
         run: |
@@ -126,7 +125,6 @@ jobs:
         run: |
           mkdir -p gh-pages/coverage-report
           cp -r coverage-report/* gh-pages/coverage-report/
-
 
       - name: Publish test and coverage reports
         uses: peaceiris/actions-gh-pages@v3
