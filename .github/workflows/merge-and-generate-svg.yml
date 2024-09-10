@@ -67,8 +67,6 @@ jobs:
           targetdir: /tmp/coveragereport
           toolpath: /tmp/reportgeneratortool
 
-
-
       - name: Upload coverage report
         uses: actions/upload-artifact@v4
         with:
@@ -95,32 +93,33 @@ jobs:
           name: coverage-report
           path: coverage-report
 
-      - name: Load test report history
+      # Load the Allure history from gh-pages
+      - name: Load Allure history
         uses: actions/checkout@v4
         if: always()
         continue-on-error: true
         with:
           ref: gh-pages
-          path: gh-pages
-
-      - name: Copy coverage report to gh-pages
-        run: |
-          mkdir -p gh-pages/coverage-report
-          cp -r coverage-report/* gh-pages/coverage-report/
+          path: gh-pages/allure-report
 
       - name: Build test report
         uses: simple-elf/allure-report-action@v1.7
         if: always()
         with:
           gh_pages: gh-pages
-          allure_history: allure-history
+          allure_history: gh-pages/allure-report/history # Ensure the path matches the one where history is saved
           allure_results: allure-results
-          allure_report: 'allure-report'
+          allure_report: allure-report
 
       - name: Copy Allure report to gh-pages
         run: |
           mkdir -p gh-pages/allure-report
           cp -r allure-report/* gh-pages/allure-report/
+
+      - name: Copy coverage report to gh-pages
+        run: |
+          mkdir -p gh-pages/coverage-report
+          cp -r coverage-report/* gh-pages/coverage-report/
 
       - name: Publish test and coverage reports
         uses: peaceiris/actions-gh-pages@v3
