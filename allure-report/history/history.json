@@ -1,0 +1,1 @@
+{"go-actions:go-actions#TestOnlyOnMac":{"statistic":{"failed":0,"broken":0,"skipped":0,"passed":1,"unknown":0,"total":1},"items":[{"uid":"3418d0849c622ff8","reportUrl":"https://chkp-davidbell.github.io/go-pipeline/allure-report/95//#testresult/3418d0849c622ff8","status":"passed","time":{"start":1725994241000,"stop":1725994241000,"duration":0}}]}}
