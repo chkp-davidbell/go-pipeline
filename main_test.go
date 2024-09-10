@@ -36,7 +36,7 @@ func TestOnlyOnMac4(t *testing.T) {
 }
 
 func TestBoth(t *testing.T) {
-	t.Logf("Running on %s", runtime.GOOS)
+	t.Logf("Running onsss %s", runtime.GOOS)
 	onlyOnLinux()
 
 }
