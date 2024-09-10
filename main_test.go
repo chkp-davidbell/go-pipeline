@@ -34,3 +34,9 @@ func TestOnlyOnMac4(t *testing.T) {
 		onlyOnLinux()
 	}
 }
+
+func TestBoth(t *testing.T) {
+	t.Logf("Running on %s", runtime.GOOS)
+	onlyOnLinux()
+
+}
