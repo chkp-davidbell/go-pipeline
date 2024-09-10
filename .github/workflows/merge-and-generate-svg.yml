@@ -1,5 +1,6 @@
 name: Merge Coverage Files and Generate SVG
 
+
 on:
   workflow_call:
     inputs:
@@ -8,6 +9,13 @@ on:
         required: false
         type: string
         default: "reports"
+
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 
 jobs:
   merge-and-generate-svg:
