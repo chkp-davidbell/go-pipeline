@@ -1,0 +1,7 @@
+"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
+"passed","Tue Sep 10 19:19:21 GMT 2024","Tue Sep 10 19:19:21 GMT 2024","0","","go-actions","","go-actions","","TestOnlyOnMac4",""
+"passed","Tue Sep 10 19:19:21 GMT 2024","Tue Sep 10 19:19:21 GMT 2024","0","","go-actions","","go-actions","","TestOnlyOnMac",""
+"passed","Tue Sep 10 19:19:21 GMT 2024","Tue Sep 10 19:19:21 GMT 2024","0","","go-actions","","go-actions","","TestOnlyOnMac2",""
+"passed","Tue Sep 10 19:19:21 GMT 2024","Tue Sep 10 19:19:21 GMT 2024","0","","go-actions","","go-actions","","TestOnlyOnMac3",""
+"passed","Tue Sep 10 19:19:21 GMT 2024","Tue Sep 10 19:19:21 GMT 2024","0","","go-actions","","go-actions","","TestOnlyOnMac23",""
+"passed","Tue Sep 10 19:19:21 GMT 2024","Tue Sep 10 19:19:21 GMT 2024","0","","go-actions","","go-actions","","TestOnlyOnLinux",""

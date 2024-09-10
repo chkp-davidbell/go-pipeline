@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
-<coverage line-rate="0.46153846153846156" branch-rate="1" lines-covered="6" lines-valid="13" branches-covered="0" branches-valid="0" complexity="0" version="0" timestamp="1725995735">
+<coverage line-rate="0.46153846153846156" branch-rate="1" lines-covered="6" lines-valid="13" branches-covered="0" branches-valid="0" complexity="0" version="0" timestamp="1725996000">
   <sources>
     <source>/home/runner/work/go-pipeline/go-pipeline</source>
   </sources>
@@ -35,32 +35,32 @@
           <methods>
             <method name="onlyOnMac" signature="" line-rate="1" branch-rate="1" complexity="0">
               <lines>
-                <line number="4" hits="3" branch="false" />
-                <line number="5" hits="3" branch="false" />
-                <line number="6" hits="3" branch="false" />
+                <line number="4" hits="6" branch="false" />
+                <line number="5" hits="6" branch="false" />
+                <line number="6" hits="6" branch="false" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="4" hits="3" branch="false" />
-            <line number="5" hits="3" branch="false" />
-            <line number="6" hits="3" branch="false" />
+            <line number="4" hits="6" branch="false" />
+            <line number="5" hits="6" branch="false" />
+            <line number="6" hits="6" branch="false" />
           </lines>
         </class>
         <class name="other.go" filename="/home/runner/work/go-pipeline/go-pipeline/other.go" line-rate="1" branch-rate="1" complexity="0">
           <methods>
             <method name="onlyOnLinux" signature="" line-rate="1" branch-rate="1" complexity="0">
               <lines>
-                <line number="4" hits="3" branch="false" />
-                <line number="5" hits="3" branch="false" />
-                <line number="6" hits="3" branch="false" />
+                <line number="4" hits="6" branch="false" />
+                <line number="5" hits="6" branch="false" />
+                <line number="6" hits="6" branch="false" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="4" hits="3" branch="false" />
-            <line number="5" hits="3" branch="false" />
-            <line number="6" hits="3" branch="false" />
+            <line number="4" hits="6" branch="false" />
+            <line number="5" hits="6" branch="false" />
+            <line number="6" hits="6" branch="false" />
           </lines>
         </class>
       </classes>
