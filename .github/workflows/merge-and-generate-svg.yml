@@ -115,10 +115,23 @@ jobs:
         run: |
           mkdir -p gh-pages/allure-report
           cp -r allure-report/* gh-pages/allure-report/
-      - name: Publish test and coverage reports
-        uses: peaceiris/actions-gh-pages@v3
-        if: always()
+          
+          
+
+#      - name: Publish test and coverage reports
+#        uses: peaceiris/actions-gh-pages@v3
+#        if: always()
+#        with:
+#          github_token: ${{ secrets.GITHUB_TOKEN }}
+#          publish_branch: gh-pages
+#          publish_dir: allure-history
+
+      # Upload the gh-pages folder as an artifact
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: gh-pages
-          publish_dir: allure-history
+          path: gh-pages
+
+      # Deploy to GitHub Pages
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
