@@ -103,6 +103,12 @@ jobs:
           path: gh-pages/allure-report
           persist-credentials: true
 
+      # Ensure the history directory exists
+      - name: Create history directory if not exists
+        run: |
+          mkdir -p gh-pages/allure-report/history
+
+      # Fix permissions before copying files
       - name: Fix Permissions
         run: |
           sudo chmod -R 777 gh-pages/allure-report/history
