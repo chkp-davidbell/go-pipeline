@@ -1,6 +1,5 @@
 name: Merge Coverage Files and Generate SVG
 
-
 on:
   workflow_call:
     inputs:
@@ -9,13 +8,6 @@ on:
         required: false
         type: string
         default: "reports"
-
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
 
 jobs:
   merge-and-generate-svg:
@@ -79,9 +71,6 @@ jobs:
           name: coverage-report
           path: |
             /tmp/coveragereport
-            
-            
-
   deploy:
     needs: merge-and-generate-svg
     runs-on: ubuntu-latest
@@ -113,7 +102,7 @@ jobs:
         run: |
           mkdir -p gh-pages/coverage-report
           cp -r coverage-report/* gh-pages/coverage-report/
-          
+
 
       - name: Build test report
         uses: simple-elf/allure-report-action@v1.7
@@ -126,9 +115,6 @@ jobs:
         run: |
           mkdir -p gh-pages/allure-report
           cp -r allure-report/* gh-pages/allure-report/
-          
-          
-
       - name: Publish test and coverage reports
         uses: peaceiris/actions-gh-pages@v3
         if: always()
@@ -136,7 +122,6 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
           publish_dir: allure-history
-
 
 #
 #      # Upload the gh-pages folder as an artifact
